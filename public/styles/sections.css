@@ -1,0 +1,698 @@
+/* Sections: media, service index, work, rigs, run sheet, kit, model and night, about, questions. */
+
+/* Media: a photo or clip in a square-cornered frame with a caption */
+
+.media {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.media__frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  border-radius: var(--radius-none);
+}
+
+.media__frame--3x4 {
+  aspect-ratio: 3 / 4;
+}
+
+.media__frame--4x5 {
+  aspect-ratio: 4 / 5;
+}
+
+.media__frame--9x16 {
+  aspect-ratio: 9 / 16;
+}
+
+.media__frame--16x9 {
+  aspect-ratio: 16 / 9;
+}
+
+.media__frame--3x2 {
+  aspect-ratio: 3 / 2;
+}
+
+/* Every render carries this tag, so a drawing is never taken for a photo. Bottom left, where renders are dark. */
+.media__tag {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  padding: var(--space-1) var(--space-2);
+  background: color-mix(in srgb, var(--blue-900) 86%, transparent);
+  color: var(--blue-100);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.media__frame img,
+.media__frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media__caption {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.media__toggle {
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--ink) 72%, transparent);
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.media__toggle:hover {
+  background: var(--blue-800);
+}
+
+/* On phones a lead picture runs to both edges of the screen; its caption stays on the page column. */
+@media (max-width: 699px) {
+  .media--bleed .media__frame {
+    margin-inline: calc(-1 * var(--gutter));
+  }
+}
+
+.section--flush {
+  padding-top: clamp(var(--space-8), 5vw, var(--space-16));
+}
+
+/* Service index (home): one row a service. Number, name, a line of copy, and a wide picture on the right half of the grid. */
+
+.index {
+  border-bottom: 1px solid var(--line);
+}
+
+.index__item {
+  border-top: 1px solid var(--line);
+}
+
+.index__link {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: var(--space-8);
+  color: inherit;
+  text-decoration: none;
+}
+
+.index__media {
+  order: -1;
+}
+
+.index__media img {
+  transition: transform 900ms var(--ease-out);
+}
+
+.index__no {
+  color: var(--blue-300);
+}
+
+.index__copy {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-3);
+}
+
+.index__title {
+  transition: color var(--fast);
+}
+
+.index__text {
+  max-width: 40ch;
+  color: var(--text-muted);
+}
+
+.index__link:hover .index__media img,
+.index__link:focus-visible .index__media img {
+  transform: scale(1.04);
+}
+
+.index__link:hover .index__title,
+.index__link:focus-visible .index__title {
+  color: var(--blue-300);
+}
+
+@media (min-width: 700px) {
+  .index__link {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: start;
+    padding-block: var(--space-12);
+  }
+
+  .index__media {
+    order: 0;
+    grid-column: 4 / span 3;
+    grid-row: 1 / span 2;
+  }
+
+  .index__no {
+    grid-column: 1 / span 3;
+    padding-bottom: var(--space-4);
+  }
+
+  .index__copy {
+    grid-column: 1 / span 3;
+    padding-right: var(--space-8);
+  }
+}
+
+@media (min-width: 1000px) {
+  /* The number stands beside the name, in the monospace, a little smaller so the two cap heights agree. */
+  .index__no {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
+    font-size: calc(var(--index-size) * 0.82);
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .index__copy {
+    grid-column: 2 / span 2;
+    grid-row: 1;
+  }
+
+  .index__media {
+    grid-row: 1;
+  }
+}
+
+/* Photo row: three across */
+
+.shots {
+  display: grid;
+  gap: var(--space-6) var(--space-4);
+}
+
+@media (min-width: 700px) {
+  .shots {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+}
+
+/* Service rows (service pages): number, name, what it covers */
+
+.service {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.service:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.service__no {
+  padding-top: 0.45em;
+  color: var(--blue-300);
+}
+
+.service__text {
+  grid-column: 2;
+  max-width: 52ch;
+  color: var(--text-muted);
+}
+
+@media (min-width: 900px) {
+  .service {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    padding-block: var(--space-8);
+  }
+
+  .service__no {
+    grid-column: 1;
+  }
+
+  .service .h-row {
+    grid-column: 2 / span 2;
+    padding-right: var(--space-6);
+  }
+
+  .service__text {
+    grid-column: 4 / span 3;
+    max-width: 60ch;
+    padding-left: var(--space-6);
+  }
+}
+
+/* Work */
+
+.show + .show {
+  margin-top: clamp(var(--space-12), 8vw, var(--space-24));
+}
+
+.show__head {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.show__facts {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* The show's video, as wide as the page column. */
+.show__reel {
+  margin-bottom: var(--space-4);
+}
+
+.show__media {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 700px) {
+  .show__reel {
+    margin-bottom: var(--space-6);
+  }
+
+  .show__media {
+    gap: var(--space-6);
+  }
+
+  /* A 16:9 photo beside a 3:4 one: at 64 to 27 both come out the same height with nothing cropped. */
+  .show--feature .show__media {
+    grid-template-columns: 64fr 27fr;
+  }
+}
+
+/* More shows: small tiles of phone video with no captions; the line above the row names the shows.
+   Two by two, then four across on desktop. */
+
+.reel-block {
+  margin-top: clamp(var(--space-12), 8vw, var(--space-24));
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.reel-block .show__facts {
+  margin: var(--space-2) 0 var(--space-6);
+}
+
+.reel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  max-width: 640px;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .reel {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    max-width: none;
+  }
+}
+
+/* Rigs: the laser counts as large figures, with the eight-laser rig playing beside them */
+
+.rigs {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.rigs__clip {
+  max-width: 360px;
+}
+
+@media (min-width: 900px) {
+  .rigs {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: start;
+  }
+
+  .rigs__table {
+    grid-column: 1 / span 4;
+    padding-right: var(--space-12);
+  }
+
+  .rigs__clip {
+    grid-column: 5 / span 2;
+    max-width: none;
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-6));
+  }
+}
+
+.rig-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.rig-table thead th {
+  padding-bottom: var(--space-3);
+}
+
+.rig-table tbody th,
+.rig-table tbody td {
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--line);
+  vertical-align: baseline;
+}
+
+.rig-table tbody tr:last-child > * {
+  border-bottom: 1px solid var(--line);
+}
+
+.rig-table tbody th {
+  width: 38%;
+  padding-right: var(--space-6);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.rig-table .figure {
+  display: inline-block;
+  min-width: 1.15em;
+  margin-right: var(--space-2);
+}
+
+.rig-table__for {
+  color: var(--text);
+}
+
+.rig-table__go {
+  width: 1%;
+  padding-left: var(--space-6);
+  white-space: nowrap;
+}
+
+.rig-note {
+  max-width: 70ch;
+  margin-top: var(--space-6);
+  color: var(--text-muted);
+}
+
+/* On phones the rig table stacks: each row becomes a short block of facts. */
+@media (max-width: 699px) {
+  .rig-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .rig-table tbody tr {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+
+  .rig-table tbody tr:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .rig-table tbody th,
+  .rig-table tbody td,
+  .rig-table tbody tr:last-child > * {
+    display: block;
+    width: auto;
+    padding: 0;
+    border: 0;
+  }
+}
+
+/* Run sheet: the steps of a show as ruled rows, the way a production schedule is set */
+
+.steps {
+  border-bottom: 1px solid var(--line);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.step > .label {
+  padding-top: 0.7em;
+  color: var(--blue-300);
+}
+
+.step__text {
+  grid-column: 2;
+  max-width: 52ch;
+  color: var(--text-muted);
+}
+
+@media (min-width: 900px) {
+  .step {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: baseline;
+    padding-block: var(--space-8);
+  }
+
+  .step > .label {
+    grid-column: 1;
+    padding-top: 0;
+    font-size: calc(var(--index-size) * 0.82);
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .step .h-index {
+    grid-column: 2 / span 2;
+    padding-right: var(--space-6);
+  }
+
+  .step__text {
+    grid-column: 4 / span 3;
+    padding-left: var(--space-6);
+  }
+}
+
+/* Kit (lighting page): the fixture types as a list of large names */
+
+.kit {
+  border-bottom: 1px solid var(--line);
+}
+
+.kit__item {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.kit__role {
+  max-width: 48ch;
+  color: var(--text-muted);
+}
+
+@media (min-width: 900px) {
+  .kit__item {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: baseline;
+    padding-block: var(--space-8);
+  }
+
+  .kit__name {
+    grid-column: 1 / span 3;
+    padding-right: var(--space-6);
+  }
+
+  .kit__role {
+    grid-column: 4 / span 3;
+    padding-left: var(--space-6);
+  }
+}
+
+/* Model and night (design page): the render of a rig beside video of it running */
+
+.pair {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.pair__night {
+  max-width: 360px;
+}
+
+@media (min-width: 900px) {
+  .pair {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: end;
+  }
+
+  .pair__model {
+    grid-column: 1 / span 4;
+    padding-right: var(--space-6);
+  }
+
+  .pair__night {
+    grid-column: 5 / span 2;
+    max-width: none;
+  }
+}
+
+/* About */
+
+.about {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.about__copy {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.about__facts {
+  display: grid;
+  align-content: start;
+  margin-top: var(--space-4);
+}
+
+.about__fact {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.about__fact:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.about__fact dt {
+  padding-top: 0.3em;
+  color: var(--blue-300);
+}
+
+.about__fact dd {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 479px) {
+  .about__fact {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+
+  .about__fact dt {
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .about {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    align-items: start;
+  }
+
+  .about__copy {
+    grid-column: 1 / span 4;
+    padding-right: var(--space-12);
+  }
+
+  .about__photo {
+    grid-column: 5 / span 2;
+  }
+}
+
+/* Questions */
+
+.faq {
+  max-width: 880px;
+}
+
+/* On desktop the list is four grid columns wide. */
+@media (min-width: 900px) {
+  .faq {
+    max-width: calc(100% * 4 / 6);
+  }
+}
+
+.faq__item {
+  border-top: 1px solid var(--line);
+}
+
+.faq__item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-block: var(--space-6);
+  list-style: none;
+  cursor: pointer;
+  transition: color var(--fast);
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__q::after {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--blue-300);
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
+  transition: transform var(--normal) var(--ease-out);
+}
+
+.faq__item[open] > .faq__q::after {
+  transform: rotate(45deg);
+}
+
+.faq__q:hover {
+  color: var(--blue-100);
+}
+
+.faq__a {
+  max-width: var(--measure);
+  padding-bottom: var(--space-6);
+  color: var(--text-muted);
+}

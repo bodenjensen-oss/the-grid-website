@@ -1,0 +1,525 @@
+/* Base: fonts, reset, type, the page grid, buttons, links. Colours, spacing and radii come from tokens.css. */
+
+/* One family at three widths, and its monospace. tools/build_fonts.py cuts the four files from Mona Sans (SIL OFL).
+   TG Sans            reading text, weights 400 to 700
+   TG Sans Condensed  display capitals, one weight
+   TG Sans Wide       button and nav capitals, one weight
+   TG Mono            labels and numbers, one weight */
+@font-face {
+  font-family: "TG Sans";
+  src: url("../assets/fonts/tg-sans-text.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TG Sans Condensed";
+  src: url("../assets/fonts/tg-sans-condensed.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TG Sans Wide";
+  src: url("../assets/fonts/tg-sans-wide.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TG Mono";
+  src: url("../assets/fonts/tg-mono.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --gutter: clamp(20px, 4vw, 40px);
+  --section-pad: clamp(var(--space-16), 10vw, var(--space-32));
+  --header-h: var(--space-16);
+  /* The grid you can see: 4 columns on phones, 6 from 700px. Content is laid out on the same columns. */
+  --cols: 4;
+  /* From the side of a full-width box to the page column. */
+  --edge: max(var(--gutter), calc((100% - var(--page-max)) / 2));
+  --grid-line: color-mix(in srgb, var(--blue-700) 44%, transparent);
+  --glow: 0 0 14px 1px color-mix(in srgb, var(--blue-300) 60%, transparent);
+  --index-size: clamp(1.875rem, 1.2rem + 3vw, 3.5rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --fast: 150ms;
+  --normal: 300ms;
+  --slow: 700ms;
+  color-scheme: dark;
+}
+
+@media (min-width: 700px) {
+  :root {
+    --cols: 6;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + var(--space-4));
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 400;
+  /* Each face ships the weights it is used at; the browser must not fake a bold or a slant. */
+  font-synthesis: none;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+table {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+::selection {
+  background: var(--blue-300);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 40;
+  padding: var(--space-3) var(--space-4);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Watched by nav.js: while any of it is on screen the header stays clear. */
+.top-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: var(--space-12);
+  pointer-events: none;
+}
+
+/* Type */
+
+/* Labels and numbers are set in the monospace, the way a patch list or a run sheet is. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Display: condensed capitals. "case" lifts @, hyphens and brackets to sit with capitals. */
+.h-display,
+.h-section,
+.h-index,
+.figure {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-feature-settings: "case";
+  text-transform: uppercase;
+}
+
+.h-display {
+  font-size: clamp(3rem, 1rem + 9vw, 8.5rem);
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.h-display--page {
+  font-size: clamp(3.25rem, 1rem + 10vw, 9.5rem);
+}
+
+.h-section {
+  font-size: clamp(2.5rem, 1.4rem + 5vw, 5.5rem);
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+/* Row titles in an index: services, run sheet, kit. */
+.h-index {
+  font-size: var(--index-size);
+  line-height: 0.98;
+}
+
+.h-row {
+  font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.375rem);
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.h-sub {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.lede {
+  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.125rem);
+  line-height: 1.6;
+  max-width: var(--measure);
+}
+
+/* One lead sentence where the copy carries the section. */
+.statement {
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.625rem);
+  line-height: 1.35;
+  font-weight: 500;
+  text-wrap: pretty;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* A number set as a graphic. */
+.figure {
+  font-size: clamp(3.25rem, 2rem + 4.4vw, 6.5rem);
+  line-height: 0.9;
+  color: var(--blue-300);
+}
+
+/* Layout */
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--page-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* The visible grid: faint column lines down every block of the page, in the brand's dark blue.
+   They sit on the same columns the content is laid out on, behind the content and over nothing. */
+.section,
+.page-head,
+.facts,
+.cta-band,
+.site-footer {
+  position: relative;
+}
+
+.section::before,
+.page-head::before,
+.facts::before,
+.cta-band::before,
+.site-footer::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: var(--edge);
+  border-right: 1px solid var(--grid-line);
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px);
+  background-size: calc(100% / var(--cols)) 100%;
+  pointer-events: none;
+}
+
+.section {
+  padding-block: var(--section-pad);
+}
+
+.section--band {
+  background: var(--surface);
+  border-block: 1px solid var(--line);
+}
+
+/* Section head: a numbered label on a rule, with one grid column of the rule lit. */
+main {
+  counter-reset: section;
+}
+
+.section__head {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: clamp(var(--space-8), 5vw, var(--space-16));
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.section__head::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: calc(100% / var(--cols));
+  height: 1px;
+  background: var(--blue-300);
+  box-shadow: var(--glow);
+  transform-origin: left center;
+}
+
+.section__head .label::before {
+  counter-increment: section;
+  content: counter(section, decimal-leading-zero) " / ";
+  color: var(--blue-300);
+}
+
+.section__head .lede {
+  color: var(--text-muted);
+}
+
+@media (min-width: 900px) {
+  .section__head {
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 0;
+    align-items: end;
+  }
+
+  .section__head .label {
+    grid-column: 1 / -1;
+  }
+
+  .section__head .h-section {
+    grid-column: 1 / span 4;
+  }
+
+  .section__head .lede {
+    grid-column: 5 / span 2;
+    padding-left: var(--space-6);
+  }
+}
+
+/* Buttons and links */
+
+/* Controls are set in wide capitals: buttons, go links, the nav, the video control. */
+.btn,
+.go,
+.site-nav__link,
+.video-toggle {
+  font-family: var(--font-wide);
+  font-weight: 600;
+  font-feature-settings: "case";
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--space-12);
+  padding: 0 var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.75rem;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--fast), color var(--fast), border-color var(--fast), box-shadow var(--normal);
+}
+
+.btn--primary {
+  background: var(--action);
+  color: var(--on-action);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--action-hover);
+  box-shadow: var(--glow);
+}
+
+.btn--outline {
+  border-color: var(--line-strong);
+}
+
+.btn--outline:hover,
+.btn--outline:focus-visible {
+  background: var(--blue-800);
+  border-color: var(--blue-300);
+  color: var(--paper);
+}
+
+.btn--sm {
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  font-size: 0.6875rem;
+}
+
+.text-link {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--blue-300);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  transition: color var(--fast), text-decoration-color var(--fast);
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  color: var(--blue-100);
+  text-decoration-thickness: 2px;
+}
+
+/* A link that leads on: caps, with an arrow that steps right on hover. */
+.go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  color: var(--blue-300);
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.go::after {
+  content: "\2192";
+  letter-spacing: 0;
+  transition: transform var(--normal) var(--ease-out);
+}
+
+a.go:hover,
+a.go:focus-visible {
+  color: var(--blue-100);
+}
+
+a.go:hover::after,
+a.go:focus-visible::after,
+a:hover > .go::after,
+a:focus-visible > .go::after {
+  transform: translateX(6px);
+}
+
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* Reveal: blocks rise into place the first time they come on screen. scripts/reveal.js adds .is-in.
+   Without JavaScript nothing is hidden. */
+.js .reveal {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity var(--slow) var(--ease-out), transform var(--slow) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.js .section__head.reveal::before {
+  transform: scaleX(0);
+  transition: transform 900ms var(--ease-out) 200ms;
+}
+
+.js .section__head.reveal.is-in::before {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+  }
+
+  .js .reveal,
+  .js .section__head.reveal::before {
+    opacity: 1;
+    transform: none;
+  }
+}

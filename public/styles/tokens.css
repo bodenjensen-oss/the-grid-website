@@ -1,0 +1,45 @@
+/* The Grid: generated from design-system/project/tokens.json by tools/build_tokens.py. Do not edit. */
+:root {
+  --ground: #04060a;
+  --surface: #070d18;
+  --surface-raised: #0b1626;
+  --line: #12233b;
+  --line-strong: #5b7697;
+  --text: #f1f6fc;
+  --text-muted: #93a6bd;
+  --action: #7cc4ff;
+  --action-hover: #b5dcff;
+  --on-action: #031020;
+  --blue-900: #071326;
+  --blue-800: #0b2244;
+  --blue-700: #0f3266;
+  --blue-300: #7cc4ff;
+  --blue-100: #d6ecff;
+  --steel-100: #eceef1;
+  --steel-300: #c9cdd3;
+  --steel-500: #969aa0;
+  --danger: #ff7a6e;
+  --confirm: #7cc4ff;
+  --focus: #ffffff;
+  --ink: #03050a;
+  --paper: #ffffff;
+  --signal: #ff2bd6;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-none: 0;
+  --radius-control: 2px;
+  --page-max: 1240px;
+  --measure: 62ch;
+  --font-display: "TG Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "TG Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-wide: "TG Sans Wide", "TG Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "TG Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}

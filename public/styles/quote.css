@@ -1,0 +1,201 @@
+/* Quote section: intro, form, and the sent-request panel. */
+
+.quote {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.quote__intro {
+  display: grid;
+  align-content: start;
+  gap: var(--space-6);
+}
+
+.quote__intro .lede {
+  color: var(--text-muted);
+}
+
+.quote__intro .label::before {
+  counter-increment: section;
+  content: counter(section, decimal-leading-zero) " / ";
+  color: var(--blue-300);
+}
+
+@media (min-width: 900px) {
+  .quote {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+  }
+
+  .quote__intro {
+    grid-column: 1 / span 2;
+    padding-right: var(--space-8);
+  }
+
+  .quote__panel {
+    grid-column: 3 / span 4;
+    padding-left: var(--space-6);
+  }
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-6);
+}
+
+.form__wide {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.field__label {
+  color: var(--text);
+}
+
+.field__optional {
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.field__control {
+  width: 100%;
+  min-height: var(--space-12);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: border-color var(--fast);
+}
+
+.field__control::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.field__control:hover {
+  border-color: var(--blue-300);
+}
+
+.field__control:focus-visible {
+  border-color: var(--blue-300);
+  box-shadow: 0 0 0 1px var(--blue-300);
+}
+
+textarea.field__control {
+  min-height: 132px;
+  resize: vertical;
+}
+
+select.field__control {
+  appearance: none;
+  padding-right: var(--space-12);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--text) 50%),
+    linear-gradient(135deg, var(--text) 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 50%,
+    calc(100% - 16px) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.field__hint {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.field__error {
+  color: var(--danger);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field.is-invalid .field__control {
+  border-color: var(--danger);
+  box-shadow: inset 0 0 0 1px var(--danger);
+}
+
+.form__foot {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.form__summary {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.form__note {
+  max-width: 56ch;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Sent */
+
+.quote-result {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+}
+
+/* The heading takes focus when the panel opens, so a screen reader starts there. It is not a control: no ring. */
+.quote-result__title:focus {
+  outline: none;
+}
+
+.quote-result__text {
+  margin: 0;
+  padding: var(--space-4);
+  max-height: 18rem;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: var(--ground);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.quote-result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.quote-result__status {
+  color: var(--confirm);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.quote-result__alt {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (max-width: 599px) {
+  .form__foot .btn,
+  .quote-result__actions .btn {
+    width: 100%;
+  }
+}
