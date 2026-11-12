@@ -5,7 +5,7 @@ import { buildMailto, buildMessage, cleanValues, localIsoDate, validateQuote } f
 const INVALID_CLASS = "is-invalid";
 const RIG_PARAM = "rig";
 const COPIED_TEXT = "Copied.";
-const COPY_FAILED_TEXT = "Copy did not work. Select the text above and copy it.";
+const COPY_FAILED_TEXT = "Copy failed. Please select the text above and copy it manually.";
 
 /** @returns {void} */
 export function initQuote() {
@@ -107,7 +107,7 @@ function showSummary(summary, count) {
  * @returns {string}
  */
 function summaryText(count) {
-  return count === 1 ? "1 field needs a fix before this can be sent." : `${count} fields need a fix before this can be sent.`;
+  return count === 1 ? "Please correct 1 field before sending." : `Please correct ${count} fields before sending.`;
 }
 
 /** @param {Element} field */
