@@ -34,6 +34,10 @@
   aspect-ratio: 3 / 2;
 }
 
+.media__frame--16x10 {
+  aspect-ratio: 16 / 10;
+}
+
 /* Every render carries this tag, so a drawing is never taken for a photo. Bottom left, where renders are dark. */
 .media__tag {
   position: absolute;
@@ -535,6 +539,25 @@
   .kit__role {
     grid-column: 4 / span 3;
     padding-left: var(--space-6);
+  }
+}
+
+/* Software (design page): one wide screen, then two side by side */
+
+.screens {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.screens__pair {
+  display: grid;
+  gap: var(--space-8);
+}
+
+@media (min-width: 900px) {
+  .screens__pair {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
   }
 }
 
