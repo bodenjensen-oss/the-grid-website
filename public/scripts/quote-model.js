@@ -59,18 +59,18 @@ export function cleanValues(raw) {
 export function validateQuote(values, todayIso) {
   const errors = [];
   if (!values.name) {
-    errors.push({ field: "name", message: "Enter your name." });
+    errors.push({ field: "name", message: "Please enter your name." });
   }
   if (!EMAIL_PATTERN.test(values.email)) {
-    errors.push({ field: "email", message: "Enter a full email address, like name@venue.com." });
+    errors.push({ field: "email", message: "Please enter a valid email address, like name@venue.com." });
   }
   if (!ISO_DATE_PATTERN.test(values.date)) {
-    errors.push({ field: "date", message: "Choose the event date." });
+    errors.push({ field: "date", message: "Please select your event date." });
   } else if (values.date < todayIso) {
-    errors.push({ field: "date", message: "Choose a date that has not passed." });
+    errors.push({ field: "date", message: "Please select a future date." });
   }
   if (!values.venue) {
-    errors.push({ field: "venue", message: "Enter the venue and city." });
+    errors.push({ field: "venue", message: "Please enter the venue and city." });
   }
   return errors;
 }
@@ -103,11 +103,11 @@ export function buildMessage(values) {
     `Email: ${values.email}`,
     `Event date: ${formatEventDate(values.date)}`,
     `Venue and city: ${values.venue}`,
-    `What you need: ${values.service || "Not given"}`,
-    `Indoor or outdoor: ${values.setting || "Not given"}`,
-    `Expected crowd: ${values.crowd || "Not given"}`,
-    `Laser rig size: ${values.rig || "Not given"}`,
-    `About the show: ${values.notes || "Nothing added"}`,
+    `Services needed: ${values.service || "Not specified"}`,
+    `Indoor or outdoor: ${values.setting || "Not specified"}`,
+    `Expected attendance: ${values.crowd || "Not specified"}`,
+    `Laser rig size: ${values.rig || "Not specified"}`,
+    `Event details: ${values.notes || "None provided"}`,
   ].join("\n");
 }
 
