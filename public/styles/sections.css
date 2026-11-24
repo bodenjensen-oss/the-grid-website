@@ -34,6 +34,11 @@
   aspect-ratio: 3 / 2;
 }
 
+/* Screen captures of THE GRID come from a 1920 by 1200 window. */
+.media__frame--16x10 {
+  aspect-ratio: 16 / 10;
+}
+
 /* Every render carries this tag, so a drawing is never taken for a photo. Bottom left, where renders are dark. */
 .media__tag {
   position: absolute;
@@ -195,6 +200,20 @@
 
   .index__media {
     grid-row: 1;
+  }
+}
+
+/* Wide clips and captures (THE GRID page): two across, a caption under each. */
+
+.clips {
+  display: grid;
+  gap: var(--space-6) var(--space-4);
+}
+
+@media (min-width: 700px) {
+  .clips {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
   }
 }
 

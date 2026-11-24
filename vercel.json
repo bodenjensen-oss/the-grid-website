@@ -6,6 +6,9 @@
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/software", "destination": "/design", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
